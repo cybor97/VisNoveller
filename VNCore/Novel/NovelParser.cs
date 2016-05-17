@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using VNCore.Extensions;
+using VNCore.Novel.Base;
+
 namespace VNCore.Novel
 {
     public static class NovelParser
