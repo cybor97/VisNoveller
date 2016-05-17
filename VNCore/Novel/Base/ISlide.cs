@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VNCore.Novel
+namespace VNCore.Novel.Base
 {
     public interface ISlide
     {

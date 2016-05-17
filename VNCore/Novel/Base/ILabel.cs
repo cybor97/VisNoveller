@@ -1,4 +1,4 @@
-﻿namespace VNCore.Novel
+﻿namespace VNCore.Novel.Base
 {
     public interface ILabel
     {
