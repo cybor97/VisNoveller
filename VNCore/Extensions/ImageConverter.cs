@@ -18,7 +18,7 @@ namespace VNCore.Extensions
         {
             using (MemoryStream ms = new MemoryStream(bytes)) return Icon.FromHandle(new Bitmap(ms).GetHicon());
         }
-        public static byte[] ToByteArray(this Bitmap image)
+        public static byte[] ToByteArray(this Image image)
         {
             MemoryStream ms = new MemoryStream();
             image.Save(ms, ImageFormat.Png);
