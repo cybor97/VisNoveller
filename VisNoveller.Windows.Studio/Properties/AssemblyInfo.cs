@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("VisNoveller.Windows.Studio")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("VisNoveller studio. App for visual novels creation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("KAD_TECH")]
 [assembly: AssemblyProduct("VisNoveller.Windows.Studio")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright ©KAD_TECH  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
