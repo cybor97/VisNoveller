@@ -38,6 +38,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Extensions\ImageConverter.cs" />
     <Compile Include="Novel\Base\ILabel.cs" />
     <Compile Include="Novel\Base\ISlide.cs" />
