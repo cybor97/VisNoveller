@@ -27,6 +27,7 @@ namespace VNCore.Novel
                     if (reader.IsStartElement("Novel"))
                     {
                         result.Title = reader.GetAttribute("Title");
+                        result.KonamiCode = reader.GetAttribute("KonamiCode");
                         int version;
                         result.Version = int.TryParse(reader.GetAttribute("Version"), out version) ? version : 0;
                         reader.Read();
@@ -62,6 +63,10 @@ namespace VNCore.Novel
                         int id;
                         result.ID = int.TryParse(reader.GetAttribute("ID"), out id) ? id : 0;
                         result.Title = reader.GetAttribute("Title");
+                        bool konamiLocked;
+                        result.KonamiLocked = bool.TryParse(reader.GetAttribute("KonamiLocked"), out konamiLocked) && konamiLocked;
+                        int konamiReplaceID;
+                        result.KonamiReplaceID = int.TryParse(reader.GetAttribute("KonamiReplaceID"), out konamiReplaceID) ? konamiReplaceID : 0;
                         reader.Read();
                     }
                     else if (reader.IsStartElement("Background"))

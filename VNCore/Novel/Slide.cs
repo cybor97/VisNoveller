@@ -12,6 +12,8 @@ namespace VNCore.Novel
     public class Slide : ISlide
     {
         public int ID { get; set; }
+        public int KonamiReplaceID { get; set; }
+        public bool KonamiLocked { get; set; }
         public string Title { get; set; }
         public object Background { get; set; }
         public List<ILabel> Labels { get; set; }
@@ -22,12 +24,14 @@ namespace VNCore.Novel
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream,new XmlWriterSettings { Indent=true}))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
             {
                 writer.WriteStartElement("Slide");
                 writer.WriteAttributeString("Type", "Slide");
                 writer.WriteAttributeString("Title", Title);
                 writer.WriteAttributeString("ID", ID.ToString());
+                writer.WriteAttributeString("KonamiLocked", KonamiLocked.ToString());
+                writer.WriteAttributeString("KonamiReplaceID", KonamiReplaceID.ToString());
 
                 writer.WriteStartElement("Background");
                 if (Background is Color)

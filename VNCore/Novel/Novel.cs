@@ -15,6 +15,7 @@ namespace VNCore.Novel
         public int Version { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string KonamiCode { get; set; }
         public Icon Icon { get; set; }
         public Image Logo { get; set; }
         public List<string> Tags { get; set; }
@@ -38,6 +39,7 @@ namespace VNCore.Novel
                 writer.WriteStartElement("Novel");
                 writer.WriteAttributeString("Version", Version.ToString());
                 writer.WriteAttributeString("Title", Title);
+                writer.WriteAttributeString("KonamiCode", KonamiCode);
                 writer.WriteElementString("Description", Description);
                 if (Icon != null) writer.WriteElementString("Icon", Convert.ToBase64String(Icon.ToByteArray()));
                 if (Logo != null) writer.WriteElementString("Logo", Convert.ToBase64String(Logo.ToByteArray()));
