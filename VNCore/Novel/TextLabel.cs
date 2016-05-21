@@ -9,6 +9,7 @@ namespace VNCore.Novel
     {
         public int Timeout { get; set; }
         public int ClickRedirect { get; set; }
+        public string Title { get; set; }
         public string Text { get; set; }
         public Position Position { get; set; }
         public override string ToString()
@@ -18,6 +19,7 @@ namespace VNCore.Novel
             {
                 writer.WriteStartElement("Label");
                 writer.WriteAttributeString("Type", "TextLabel");
+                writer.WriteAttributeString("Title", Title);
                 writer.WriteAttributeString("Timeout", Timeout.ToString());
                 writer.WriteAttributeString("ClickRedirect", ClickRedirect.ToString());
                 writer.WriteAttributeString("PositionX", Position.X.ToString());

@@ -111,6 +111,7 @@ namespace VNCore.Novel
                             X = byte.TryParse(reader.GetAttribute("PositionX"), out x) ? x : (byte)0,
                             Y = byte.TryParse(reader.GetAttribute("PositionY"), out y) ? y : (byte)0
                         };
+                        result.Title = reader.GetAttribute("Title");
                         result.Text = reader.ReadElementContentAsString();
                     }
                     else reader.Read();
