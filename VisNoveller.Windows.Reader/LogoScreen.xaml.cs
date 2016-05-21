@@ -17,7 +17,6 @@ namespace VisNoveller.Windows.Reader
             InitializeComponent();
             Magic = new Random();
             Loaded += (s, EA) => CoolTextEffect("KAD_TECHi");
-
         }
         void CoolTextEffect(string baseString)
         {
@@ -38,7 +37,7 @@ namespace VisNoveller.Windows.Reader
         }
         bool OffsetString(string baseString, ref string displayString)
         {
-            for (int i = 0; i < displayString.Length; i++)
+            for (int i = 0; i < displayString.Length; i++)//Hello
             {
                 var arr = displayString.ToCharArray();
                 if (displayString[i] < baseString[i])
