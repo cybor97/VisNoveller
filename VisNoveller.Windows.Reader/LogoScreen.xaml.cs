@@ -37,7 +37,7 @@ namespace VisNoveller.Windows.Reader
         }
         bool OffsetString(string baseString, ref string displayString)
         {
-            for (int i = 0; i < displayString.Length; i++)//Hello
+            for (int i = 0; i < displayString.Length; i++)
             {
                 var arr = displayString.ToCharArray();
                 if (displayString[i] < baseString[i])
