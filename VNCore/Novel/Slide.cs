@@ -16,6 +16,7 @@ namespace VNCore.Novel
         public bool KonamiLocked { get; set; }
         public string Title { get; set; }
         public object Background { get; set; }
+        public byte[] BackgroundMusic { get; set; }
         public List<ILabel> Labels { get; set; }
         public Slide()
         {
@@ -45,6 +46,9 @@ namespace VNCore.Novel
                     writer.WriteString(Convert.ToBase64String(((Image)Background).ToByteArray()));
                 }
                 writer.WriteEndElement();
+
+                if (BackgroundMusic != null && BackgroundMusic.Length > 0)
+                    writer.WriteElementString("BackgroundMusic", Convert.ToBase64String(BackgroundMusic));
 
                 foreach (var current in Labels)
                     writer.WriteRaw(current.ToString());

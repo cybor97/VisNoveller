@@ -81,6 +81,8 @@ namespace VNCore.Novel
                                 break;
                         }
                     }
+                    else if (reader.IsStartElement("BackgroundMusic"))
+                        result.BackgroundMusic = Convert.FromBase64String(reader.ReadElementContentAsString());
                     else if (reader.IsStartElement("Label"))
                     {
                         switch (reader.GetAttribute("Type"))
