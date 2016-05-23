@@ -108,11 +108,7 @@ namespace VNCore.Novel
                         byte x, y;
                         result.Timeout = int.TryParse(reader.GetAttribute("Timeout"), out timeout) ? timeout : -1;
                         result.ClickRedirect = int.TryParse(reader.GetAttribute("ClickRedirect"), out clickRedirect) ? clickRedirect : -1;
-                        result.Position = new Position
-                        {
-                            X = byte.TryParse(reader.GetAttribute("PositionX"), out x) ? x : (byte)0,
-                            Y = byte.TryParse(reader.GetAttribute("PositionY"), out y) ? y : (byte)0
-                        };
+                        result.Position = Position.Parse("Position");
                         result.Title = reader.GetAttribute("Title");
                         result.Text = reader.ReadElementContentAsString();
                     }

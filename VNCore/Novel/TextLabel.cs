@@ -22,8 +22,7 @@ namespace VNCore.Novel
                 writer.WriteAttributeString("Title", Title);
                 writer.WriteAttributeString("Timeout", Timeout.ToString());
                 writer.WriteAttributeString("ClickRedirect", ClickRedirect.ToString());
-                writer.WriteAttributeString("PositionX", Position.X.ToString());
-                writer.WriteAttributeString("PositionY", Position.Y.ToString());
+                writer.WriteAttributeString("Position", Position.ToString());
                 writer.WriteString(Text);
                 writer.WriteEndElement();
             }
