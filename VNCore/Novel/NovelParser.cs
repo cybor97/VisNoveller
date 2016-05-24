@@ -105,10 +105,10 @@ namespace VNCore.Novel
                     if (reader.IsStartElement("Label"))
                     {
                         int timeout, clickRedirect;
-                        byte x, y;
                         result.Timeout = int.TryParse(reader.GetAttribute("Timeout"), out timeout) ? timeout : -1;
                         result.ClickRedirect = int.TryParse(reader.GetAttribute("ClickRedirect"), out clickRedirect) ? clickRedirect : -1;
-                        result.Position = Position.Parse("Position");
+                        Position position;
+                        result.Position = Position.TryParse(reader.GetAttribute("Position"), out position) ? position : new Position();
                         result.Title = reader.GetAttribute("Title");
                         result.Text = reader.ReadElementContentAsString();
                     }
