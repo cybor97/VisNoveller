@@ -28,5 +28,25 @@ namespace VNCore.Novel
             }
             return Encoding.UTF8.GetString(stream.GetBuffer());
         }
+        public static TextLabel Parse(string xml)
+        {
+            var result = new TextLabel();
+            using (var reader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(xml))))
+                while (!reader.EOF)
+                {
+                    if (reader.IsStartElement("Label"))
+                    {
+                        int timeout, clickRedirect;
+                        result.Timeout = int.TryParse(reader.GetAttribute("Timeout"), out timeout) ? timeout : -1;
+                        result.ClickRedirect = int.TryParse(reader.GetAttribute("ClickRedirect"), out clickRedirect) ? clickRedirect : -1;
+                        Position position;
+                        result.Position = Position.TryParse(reader.GetAttribute("Position"), out position) ? position : new Position();
+                        result.Title = reader.GetAttribute("Title");
+                        result.Text = reader.ReadElementContentAsString();
+                    }
+                    else reader.Read();
+                }
+            return result;
+        }
     }
 }

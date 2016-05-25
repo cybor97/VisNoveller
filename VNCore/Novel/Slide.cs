@@ -56,5 +56,49 @@ namespace VNCore.Novel
             }
             return Encoding.UTF8.GetString(stream.GetBuffer());
         }
+        public static Slide Parse(string xml)
+        {
+            var result = new Slide();
+            using (var reader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(xml))))
+                while (!reader.EOF)
+                {
+                    if (reader.IsStartElement("Slide"))
+                    {
+                        int id;
+                        result.ID = int.TryParse(reader.GetAttribute("ID"), out id) ? id : 0;
+                        result.Title = reader.GetAttribute("Title");
+                        bool konamiLocked;
+                        result.KonamiLocked = bool.TryParse(reader.GetAttribute("KonamiLocked"), out konamiLocked) && konamiLocked;
+                        int konamiReplaceID;
+                        result.KonamiReplaceID = int.TryParse(reader.GetAttribute("KonamiReplaceID"), out konamiReplaceID) ? konamiReplaceID : 0;
+                        reader.Read();
+                    }
+                    else if (reader.IsStartElement("Background"))
+                    {
+                        switch (reader.GetAttribute("Type"))
+                        {
+                            case "Color":
+                                result.Background = ColorTranslator.FromHtml(reader.ReadElementContentAsString());
+                                break;
+                            case "Image":
+                                result.Background = Convert.FromBase64String(reader.ReadElementContentAsString()).ToBitmap();
+                                break;
+                        }
+                    }
+                    else if (reader.IsStartElement("BackgroundMusic"))
+                        result.BackgroundMusic = Convert.FromBase64String(reader.ReadElementContentAsString());
+                    else if (reader.IsStartElement("Label"))
+                    {
+                        switch (reader.GetAttribute("Type"))
+                        {
+                            default:
+                                result.Labels.Add(TextLabel.Parse(reader.ReadOuterXml()));
+                                break;
+                        }
+                    }
+                    else reader.Read();
+                }
+            return result;
+        }
     }
 }

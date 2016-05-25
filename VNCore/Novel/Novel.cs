@@ -53,5 +53,47 @@ namespace VNCore.Novel
             }
             return result;
         }
+        public static Novel ParseFile(string filename)
+        {
+            return Parse(new FileStream(filename, FileMode.Open));
+        }
+        public static Novel ParseText(string xml)
+        {
+            return Parse(new MemoryStream(Encoding.UTF8.GetBytes(xml)));
+        }
+        public static Novel Parse(Stream stream)
+        {
+            var result = new Novel();
+            using (var reader = XmlReader.Create(stream))
+                while (!reader.EOF)
+                {
+                    if (reader.IsStartElement("Novel"))
+                    {
+                        result.Title = reader.GetAttribute("Title");
+                        result.KonamiCode = reader.GetAttribute("KonamiCode");
+                        int version;
+                        result.Version = int.TryParse(reader.GetAttribute("Version"), out version) ? version : 0;
+                        reader.Read();
+                    }
+                    else if (reader.IsStartElement("Description"))
+                        result.Description = reader.ReadElementContentAsString();
+                    else if (reader.IsStartElement("Icon"))
+                        result.Icon = Convert.FromBase64String(reader.ReadElementContentAsString()).ToIcon();
+                    else if (reader.IsStartElement("Logo"))
+                        result.Logo = Convert.FromBase64String(reader.ReadElementContentAsString()).ToBitmap();
+                    else if (reader.IsStartElement("Tags"))
+                        foreach (var current in reader.ReadElementContentAsString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries))
+                            result.Tags.Add(current);
+                    else if (reader.IsStartElement("Slide"))
+                        switch (reader.GetAttribute("Type"))
+                        {
+                            default:
+                                result.Add(Slide.Parse(reader.ReadOuterXml()));
+                                break;
+                        }
+                    else reader.Read();
+                }
+            return result;
+        }
     }
 }

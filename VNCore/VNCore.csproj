@@ -50,7 +50,6 @@
     <Compile Include="Novel\Novel.cs" />
     <Compile Include="Novel\Slide.cs" />
     <Compile Include="Novel\TextLabel.cs" />
-    <Compile Include="Novel\NovelParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saves\SavedGame.cs" />
   </ItemGroup>
