@@ -16,7 +16,7 @@ namespace VNCore.Novel
         public bool KonamiLocked { get; set; }
         public string Title { get; set; }
         public object Background { get; set; }
-        public byte[] BackgroundMusic { get; set; }
+        public object BackgroundSound { get; set; }
         public List<ILabel> Labels { get; set; }
         public Slide()
         {
@@ -34,21 +34,41 @@ namespace VNCore.Novel
                 writer.WriteAttributeString("KonamiLocked", KonamiLocked.ToString());
                 writer.WriteAttributeString("KonamiReplaceID", KonamiReplaceID.ToString());
 
-                writer.WriteStartElement("Background");
-                if (Background is Color)
+                if (Background != null)
                 {
-                    writer.WriteAttributeString("Type", "Color");
-                    writer.WriteString(ColorTranslator.ToHtml((Color)Background));
+                    writer.WriteStartElement("Background");
+                    if (Background is Color)
+                    {
+                        writer.WriteAttributeString("Type", "Color");
+                        writer.WriteString(ColorTranslator.ToHtml((Color)Background));
+                    }
+                    else if (Background is Image)
+                    {
+                        writer.WriteAttributeString("Type", "Image");
+                        writer.WriteString(Convert.ToBase64String(((Image)Background).ToByteArray()));
+                    }
+                    else if (Background is string)
+                    {
+                        writer.WriteAttributeString("Type", "File");
+                        writer.WriteString((string)Background);
+                    }
+                    writer.WriteEndElement();
                 }
-                else if (Background is Image)
+                if (BackgroundSound != null)
                 {
-                    writer.WriteAttributeString("Type", "Image");
-                    writer.WriteString(Convert.ToBase64String(((Image)Background).ToByteArray()));
+                    writer.WriteStartElement("BackgroundSound");
+                    if (BackgroundSound is byte[])
+                    {
+                        writer.WriteAttributeString("Type", "Data");
+                        writer.WriteString(Convert.ToBase64String((byte[])BackgroundSound));
+                    }
+                    else if (BackgroundSound is string)
+                    {
+                        writer.WriteAttributeString("Type", "File");
+                        writer.WriteString((string)BackgroundSound);
+                    }
+                    writer.WriteEndElement();
                 }
-                writer.WriteEndElement();
-
-                if (BackgroundMusic != null && BackgroundMusic.Length > 0)
-                    writer.WriteElementString("BackgroundMusic", Convert.ToBase64String(BackgroundMusic));
 
                 foreach (var current in Labels)
                     writer.WriteRaw(current.ToString());
@@ -83,10 +103,23 @@ namespace VNCore.Novel
                             case "Image":
                                 result.Background = Convert.FromBase64String(reader.ReadElementContentAsString()).ToBitmap();
                                 break;
+                            case "File":
+                                result.Background = reader.ReadElementContentAsString();
+                                break;
                         }
                     }
-                    else if (reader.IsStartElement("BackgroundMusic"))
-                        result.BackgroundMusic = Convert.FromBase64String(reader.ReadElementContentAsString());
+                    else if (reader.IsStartElement("BackgroundSound"))
+                    {
+                        switch (reader.GetAttribute("Type"))
+                        {
+                            case "Data":
+                                result.BackgroundSound = Convert.FromBase64String(reader.ReadElementContentAsString());
+                                break;
+                            case "File":
+                                result.BackgroundSound = reader.ReadElementContentAsString();
+                                break;
+                        }
+                    }
                     else if (reader.IsStartElement("Label"))
                     {
                         switch (reader.GetAttribute("Type"))
