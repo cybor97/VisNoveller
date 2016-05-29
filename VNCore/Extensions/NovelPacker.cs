@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using VNCore.Novel;
 
 namespace VNCore.Extensions
@@ -13,8 +12,7 @@ namespace VNCore.Extensions
         {
             if (File.Exists(novelFilename))
             {
-                var validatingResult = Novel.Novel.Validate(novelFilename);
-                if (validatingResult == NovelValidatingResult.OK)
+                if (Novel.Novel.Validate(novelFilename) == NovelValidatingResult.OK)
                 {
                     var novel = Novel.Novel.ParseFile(novelFilename);
                     var workingDirectory = Directory.GetParent(novelFilename).FullName;
