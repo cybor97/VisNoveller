@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-
+//Developer: Jame Olivares
+//Modified by: Ruslan Muhametshin
 namespace VNCore.Extensions
 {
-    public class ZipStorer : IDisposable
+    public partial class ZipStorer : IDisposable
     {
         /// <summary>
         /// Compression method enumeration
@@ -273,7 +274,7 @@ namespace VNCore.Extensions
 
             List<ZipFileEntry> result = new List<ZipFileEntry>();
 
-            for (int pointer = 0; pointer < CentralDirImage.Length; )
+            for (int pointer = 0; pointer < CentralDirImage.Length;)
             {
                 uint signature = BitConverter.ToUInt32(CentralDirImage, pointer);
                 if (signature != 0x02014b50)
