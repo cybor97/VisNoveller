@@ -10,6 +10,23 @@ using System.Linq;
 
 namespace VNCore.Novel
 {
+    public enum NovelValidatingResult
+    {
+        OK,
+        Empty,
+        IncorrectFormat,
+        NovelFileNotExists,
+        ResourceFileNotExists,
+        InnerNavigationProblems
+    }
+    public enum ReservedIDs
+    {
+        StartSlide = -1,
+        MenuSlide = -2,
+        WaitingSlide = -3,
+        EndingSlide = -4,
+        ExitConfirmSlide = -5
+    }
     public class Novel : List<ISlide>
     {
         public int Version { get; set; }
@@ -53,6 +70,44 @@ namespace VNCore.Novel
             }
             return result;
         }
+        public static NovelValidatingResult Validate(string novelFilename)
+        {
+            var workingDirectory = Directory.GetParent(novelFilename).FullName;
+            if (File.Exists(novelFilename))
+                if (!string.IsNullOrWhiteSpace(File.ReadAllText(novelFilename)))
+                    try
+                    {
+                        var novel = ParseFile(novelFilename);
+                        if (novel != null)
+                        {
+                            bool allFilesExists = true;
+                            foreach (var current in novel.GetResources())
+                                allFilesExists = allFilesExists && File.Exists(Path.Combine(Environment.CurrentDirectory, current));
+                            if (allFilesExists)
+                            {
+                                bool innerNavigationOK = true;
+                                var ids = new List<int>();
+                                foreach (var currentSlide in novel)
+                                    ids.Add(currentSlide.ID);
+                                for (int i = 0; i < ids.Count; i++)
+                                    for (int n = 0; n < ids.Count; n++)
+                                        if (i != n)
+                                            innerNavigationOK = innerNavigationOK &&
+                                                ids[i] != ids[n] &&
+                                                (ids[i] > 0 || Enum.GetValues(typeof(ReservedIDs)).OfType<int>().ToArray().Contains(ids[i]));
+                                return innerNavigationOK ? NovelValidatingResult.OK : NovelValidatingResult.InnerNavigationProblems;
+                            }
+                            else return NovelValidatingResult.ResourceFileNotExists;
+                        }
+                        else return NovelValidatingResult.IncorrectFormat;
+                    }
+                    catch (XmlException)
+                    {
+                        return NovelValidatingResult.IncorrectFormat;
+                    }
+                else return NovelValidatingResult.Empty;
+            else return NovelValidatingResult.NovelFileNotExists;
+        }
         public static Novel ParseFile(string filename)
         {
             return Parse(new FileStream(filename, FileMode.Open));
@@ -93,6 +148,17 @@ namespace VNCore.Novel
                         }
                     else reader.Read();
                 }
+            return result;
+        }
+        public List<string> GetResources()
+        {
+            var result = new List<string>();
+            foreach (var currentISlide in this)
+            {
+                result.Add((string)currentISlide.Background);
+                if (currentISlide is Slide)
+                    result.Add((string)((Slide)currentISlide).BackgroundSound);
+            }
             return result;
         }
     }
