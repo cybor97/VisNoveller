@@ -12,6 +12,7 @@ namespace VNCore.Novel
         public string Title { get; set; }
         public string Text { get; set; }
         public Position Position { get; set; }
+        public ClickProcess ClickProcess { get; set; }//TODO: Implement
         public override string ToString()
         {
             var stream = new MemoryStream();
