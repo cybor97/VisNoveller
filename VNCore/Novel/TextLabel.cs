@@ -8,11 +8,10 @@ namespace VNCore.Novel
     public class TextLabel : ILabel
     {
         public int Timeout { get; set; }
-        public int ClickRedirect { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public Position Position { get; set; }
-        public ClickProcess ClickProcess { get; set; }//TODO: Implement
+        public Fork Fork { get; set; }
         public override string ToString()
         {
             var stream = new MemoryStream();
@@ -22,8 +21,9 @@ namespace VNCore.Novel
                 writer.WriteAttributeString("Type", "TextLabel");
                 writer.WriteAttributeString("Title", Title);
                 writer.WriteAttributeString("Timeout", Timeout.ToString());
-                writer.WriteAttributeString("ClickRedirect", ClickRedirect.ToString());
                 writer.WriteAttributeString("Position", Position.ToString());
+                if (Fork != null)
+                    writer.WriteRaw(Fork.ToString());
                 writer.WriteString(Text);
                 writer.WriteEndElement();
             }
@@ -37,14 +37,15 @@ namespace VNCore.Novel
                 {
                     if (reader.IsStartElement("Label"))
                     {
-                        int timeout, clickRedirect;
+                        int timeout;
                         result.Timeout = int.TryParse(reader.GetAttribute("Timeout"), out timeout) ? timeout : -1;
-                        result.ClickRedirect = int.TryParse(reader.GetAttribute("ClickRedirect"), out clickRedirect) ? clickRedirect : -1;
                         Position position;
                         result.Position = Position.TryParse(reader.GetAttribute("Position"), out position) ? position : new Position();
                         result.Title = reader.GetAttribute("Title");
                         result.Text = reader.ReadElementContentAsString();
                     }
+                    else if (reader.IsStartElement("Fork"))
+                        result.Fork = Fork.Parse(reader.ReadOuterXml());
                     else reader.Read();
                 }
             return result;
