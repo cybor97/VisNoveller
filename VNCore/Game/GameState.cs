@@ -10,10 +10,10 @@ namespace VNCore.Game
         public string Name { get; set; }
         public string NovelPath { get; set; }
         public int SlideID { get; set; }
-        public List<Decision> Decisions { get; set; }
+        public List<Link> Links { get; set; }
         public GameState()
         {
-            Decisions = new List<Decision>();
+            Links = new List<Link>();
         }
         public override string ToString()
         {
@@ -24,7 +24,7 @@ namespace VNCore.Game
                 writer.WriteAttributeString("Name", Name);
                 writer.WriteAttributeString("NovelPath", NovelPath);
                 writer.WriteAttributeString("SlideID", SlideID.ToString());
-                foreach (var current in Decisions)
+                foreach (var current in Links)
                     writer.WriteRaw(current.ToString());
                 writer.WriteEndElement();
             }
@@ -43,8 +43,8 @@ namespace VNCore.Game
                         slideID = int.TryParse(reader.GetAttribute("SlideID"), out slideID) ? slideID : 0;
                         reader.Read();
                     }
-                    else if (reader.IsStartElement("Decision"))
-                        result.Decisions.Add(Decision.Parse(reader.ReadOuterXml()));
+                    else if (reader.IsStartElement("Link"))
+                        result.Links.Add(Link.Parse(reader.ReadOuterXml()));
                     else reader.Read();
             return result;
         }
