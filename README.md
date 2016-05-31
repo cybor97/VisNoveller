@@ -1,4 +1,8 @@
-VisNoveller - is a project of crossplatform visual novels creating/playing software.
+#Still waiting for OxoTHuK90 to provide layout...
+
+![](https://www.emssoftware.com/EMS/media/EMS/NewSite/images/loading.gif)
+
+##VisNoveller - is a project of crossplatform visual novels creating/playing software.
 
 It consist of:
 
