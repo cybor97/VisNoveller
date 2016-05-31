@@ -42,14 +42,17 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="EnvironmentVariables.cs" />
+    <Compile Include="Novel\Image.cs" />
     <Compile Include="Extensions\ImageConverter.cs" />
     <Compile Include="Extensions\NovelPacker.cs" />
+    <Compile Include="Novel\Base\ICharacter.cs" />
     <Compile Include="Novel\Base\Position.cs" />
     <Compile Include="Extensions\ZipStorer.cs" />
     <Compile Include="Extensions\ZipStorer.CyborExtensions.cs" />
     <Compile Include="Game\Link.cs" />
     <Compile Include="Novel\Base\ILabel.cs" />
     <Compile Include="Novel\Base\ISlide.cs" />
+    <Compile Include="Novel\Character.cs" />
     <Compile Include="Novel\Fork.cs" />
     <Compile Include="Novel\Novel.cs" />
     <Compile Include="Novel\Slide.cs" />
