@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using VNCore.Novel.Base;
 
-namespace VNCore.Novel
+namespace VNCore.Novel.Controls
 {
     public class Character : ICharacter
     {

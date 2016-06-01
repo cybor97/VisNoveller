@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using VNCore.Novel.Base;
+using VNCore.Novel.Controls;
 
 namespace VNCore.Novel
 {
