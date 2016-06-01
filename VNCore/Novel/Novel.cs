@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
 using System.Xml;
 using System.IO;
 using VNCore.Novel.Base;
 using System;
-using VNCore.Extensions;
 using System.Linq;
 
 namespace VNCore.Novel
@@ -33,7 +31,7 @@ namespace VNCore.Novel
         public string Title { get; set; }
         public string Description { get; set; }
         public string KonamiCode { get; set; }
-        public Icon Icon { get; set; }
+        public Image Icon { get; set; }
         public Image Logo { get; set; }
         public List<string> Tags { get; set; }
         public Novel()
@@ -58,8 +56,18 @@ namespace VNCore.Novel
                 writer.WriteAttributeString("Title", Title);
                 writer.WriteAttributeString("KonamiCode", KonamiCode);
                 writer.WriteElementString("Description", Description);
-                if (Icon != null) writer.WriteElementString("Icon", Convert.ToBase64String(Icon.ToByteArray()));
-                if (Logo != null) writer.WriteElementString("Logo", Convert.ToBase64String(Logo.ToByteArray()));
+                if (Icon != null)
+                {
+                    writer.WriteStartElement("Icon");
+                    writer.WriteRaw(Icon.ToString());
+                    writer.WriteEndElement();
+                }
+                if (Logo != null)
+                {
+                    writer.WriteStartElement("Logo");
+                    writer.WriteRaw(Icon.ToString());
+                    writer.WriteEndElement();
+                }
                 var tags = "";
                 foreach (var current in Tags.Where(c => !string.IsNullOrWhiteSpace(c)))
                     tags += "#" + current;
@@ -133,9 +141,9 @@ namespace VNCore.Novel
                     else if (reader.IsStartElement("Description"))
                         result.Description = reader.ReadElementContentAsString();
                     else if (reader.IsStartElement("Icon"))
-                        result.Icon = Convert.FromBase64String(reader.ReadElementContentAsString()).ToIcon();
+                        result.Icon = Image.Parse(reader.ReadInnerXml());
                     else if (reader.IsStartElement("Logo"))
-                        result.Logo = Convert.FromBase64String(reader.ReadElementContentAsString()).ToBitmap();
+                        result.Logo = Image.Parse(reader.ReadInnerXml());
                     else if (reader.IsStartElement("Tags"))
                         foreach (var current in reader.ReadElementContentAsString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries))
                             result.Tags.Add(current);

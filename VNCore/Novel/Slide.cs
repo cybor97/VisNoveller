@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Xml;
-using VNCore.Extensions;
 using VNCore.Novel.Base;
 
 namespace VNCore.Novel
@@ -45,7 +44,7 @@ namespace VNCore.Novel
                     else if (Background is Image)
                     {
                         writer.WriteAttributeString("Type", "Image");
-                        writer.WriteString(Convert.ToBase64String(((Image)Background).ToByteArray()));
+                        writer.WriteRaw(Background.ToString());
                     }
                     else if (Background is string)
                     {
@@ -101,7 +100,7 @@ namespace VNCore.Novel
                                 result.Background = ColorTranslator.FromHtml(reader.ReadElementContentAsString());
                                 break;
                             case "Image":
-                                result.Background = Convert.FromBase64String(reader.ReadElementContentAsString()).ToBitmap();
+                                result.Background = Image.Parse(reader.ReadInnerXml());
                                 break;
                             case "File":
                                 result.Background = reader.ReadElementContentAsString();
