@@ -1,2 +1,2 @@
 #Base layouts
-Here there are base layouts of app GUI
+Here you can see base layouts of app GUI
