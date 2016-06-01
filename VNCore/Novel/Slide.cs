@@ -17,9 +17,11 @@ namespace VNCore.Novel
         public object Background { get; set; }
         public object BackgroundSound { get; set; }
         public List<ILabel> Labels { get; set; }
+        public List<ICharacter> Characters { get; set; }
         public Slide()
         {
             Labels = new List<ILabel>();
+            Characters = new List<ICharacter>();
         }
         public override string ToString()
         {
@@ -71,6 +73,8 @@ namespace VNCore.Novel
 
                 foreach (var current in Labels)
                     writer.WriteRaw(current.ToString());
+                foreach (var current in Characters)
+                    writer.WriteRaw(current.ToString());
                 writer.WriteEndElement();
             }
             return Encoding.UTF8.GetString(stream.GetBuffer());
@@ -80,7 +84,6 @@ namespace VNCore.Novel
             var result = new Slide();
             using (var reader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(xml))))
                 while (!reader.EOF)
-                {
                     if (reader.IsStartElement("Slide"))
                     {
                         int id;
@@ -93,7 +96,6 @@ namespace VNCore.Novel
                         reader.Read();
                     }
                     else if (reader.IsStartElement("Background"))
-                    {
                         switch (reader.GetAttribute("Type"))
                         {
                             case "Color":
@@ -106,9 +108,7 @@ namespace VNCore.Novel
                                 result.Background = reader.ReadElementContentAsString();
                                 break;
                         }
-                    }
                     else if (reader.IsStartElement("BackgroundSound"))
-                    {
                         switch (reader.GetAttribute("Type"))
                         {
                             case "Data":
@@ -118,18 +118,21 @@ namespace VNCore.Novel
                                 result.BackgroundSound = reader.ReadElementContentAsString();
                                 break;
                         }
-                    }
                     else if (reader.IsStartElement("Label"))
-                    {
                         switch (reader.GetAttribute("Type"))
                         {
                             default:
                                 result.Labels.Add(TextLabel.Parse(reader.ReadOuterXml()));
                                 break;
                         }
-                    }
+                    else if (reader.IsStartElement("Character"))
+                        switch (reader.GetAttribute("Type"))
+                        {
+                            default:
+                                result.Characters.Add(Character.Parse(reader.ReadOuterXml()));
+                                break;
+                        }
                     else reader.Read();
-                }
             return result;
         }
     }
