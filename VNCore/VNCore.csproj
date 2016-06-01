@@ -46,6 +46,9 @@
     <Compile Include="MonoIntegrated\KnownColor.cs" />
     <Compile Include="MonoIntegrated\KnownColors.cs" />
     <Compile Include="MonoIntegrated\SystemColors.cs" />
+    <Compile Include="Novel\Animations\PositionAnimation.cs" />
+    <Compile Include="Novel\Animations\Storyboard.cs" />
+    <Compile Include="Novel\Base\Animation.cs" />
     <Compile Include="Novel\Image.cs" />
     <Compile Include="Extensions\NovelPacker.cs" />
     <Compile Include="Novel\Base\ICharacter.cs" />
@@ -55,14 +58,15 @@
     <Compile Include="Game\Link.cs" />
     <Compile Include="Novel\Base\ILabel.cs" />
     <Compile Include="Novel\Base\ISlide.cs" />
-    <Compile Include="Novel\Character.cs" />
+    <Compile Include="Novel\Controls\Character.cs" />
     <Compile Include="Novel\Fork.cs" />
     <Compile Include="Novel\Novel.cs" />
     <Compile Include="Novel\Slide.cs" />
-    <Compile Include="Novel\TextLabel.cs" />
+    <Compile Include="Novel\Controls\TextLabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\GameState.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

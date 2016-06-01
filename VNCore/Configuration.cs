@@ -10,6 +10,7 @@ namespace VNCore
         public static string Language { get; set; }
         public static bool Fullscreen { get; set; }
         public static bool AutoSave { get; set; }
+        public static int SoundVolume { get; set; }
         public static void Init()
         {
             if (File.Exists(EnvironmentVariables.ConfigurationFile))
@@ -29,6 +30,7 @@ namespace VNCore
                 writer.WriteAttributeString("Language", Language ?? (Language = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName));
                 writer.WriteAttributeString("Fullscreen", Fullscreen.ToString());
                 writer.WriteAttributeString("AutoSave", AutoSave.ToString());
+                writer.WriteAttributeString("SoundVolume", AutoSave.ToString());
                 writer.WriteEndElement();
             }
         }
@@ -43,6 +45,7 @@ namespace VNCore
                             Language = reader.GetAttribute("Language");
                             Fullscreen = bool.Parse(reader.GetAttribute("Fullscreen"));
                             AutoSave = bool.Parse(reader.GetAttribute("AutoSave"));
+                            SoundVolume = int.Parse(reader.GetAttribute("SoundVolume"));
                         }
         }
     }
