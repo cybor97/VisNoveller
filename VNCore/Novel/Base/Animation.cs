@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace VNCore.Novel.Base
+﻿namespace VNCore.Novel.Base
 {
     public interface IAnimation<AnimatedType>
     {
