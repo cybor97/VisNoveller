@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VNCore.Novel.Base
+namespace VNCore.Novel
 {
     public struct Position
     {

@@ -36,17 +36,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="EnvironmentVariables.cs" />
+    <Compile Include="MonoIntegrated\Color.cs" />
+    <Compile Include="MonoIntegrated\ColorTranslator.cs" />
+    <Compile Include="MonoIntegrated\KnownColor.cs" />
+    <Compile Include="MonoIntegrated\KnownColors.cs" />
+    <Compile Include="MonoIntegrated\SystemColors.cs" />
     <Compile Include="Novel\Image.cs" />
-    <Compile Include="Extensions\ImageConverter.cs" />
     <Compile Include="Extensions\NovelPacker.cs" />
     <Compile Include="Novel\Base\ICharacter.cs" />
-    <Compile Include="Novel\Base\Position.cs" />
+    <Compile Include="Novel\Position.cs" />
     <Compile Include="Extensions\ZipStorer.cs" />
     <Compile Include="Extensions\ZipStorer.CyborExtensions.cs" />
     <Compile Include="Game\Link.cs" />
