@@ -11,6 +11,14 @@ namespace VNCore.Novel
         public Link MainLink { get; set; }
         public Link AlternativeLink { get; set; }
         public List<Link> RequiredDecisions { get; set; }
+        public Link Navigate(GameState state)
+        {
+            return RequiredDecisions == null ||
+                RequiredDecisions.Count == 0 ||
+                AlternativeLink == null ||
+                RequiredDecisions.TrueForAll(c => state.Links.Contains(c)) ?
+                MainLink : AlternativeLink;
+        }
         public override string ToString()
         {
             var stream = new MemoryStream();
@@ -34,7 +42,6 @@ namespace VNCore.Novel
                             writer.WriteRaw(current.ToString());
                     writer.WriteEndElement();
                 }
-
                 writer.WriteEndElement();
             }
             return Encoding.UTF8.GetString(stream.GetBuffer());
