@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Xml;
+using VNCore.Novel.Animations;
 using VNCore.Novel.Base;
 
 namespace VNCore.Novel.Controls
@@ -10,9 +11,8 @@ namespace VNCore.Novel.Controls
     {
         public int ID { get; set; }
         public List<object> Images { get; set; }
-
         public Position Position { get; set; }
-
+        public Storyboard Storyboard { get; set; }
         public override string ToString()
         {
             var stream = new MemoryStream();
@@ -22,6 +22,8 @@ namespace VNCore.Novel.Controls
                 writer.WriteAttributeString("Type", "Character");
                 writer.WriteAttributeString("ID", ID.ToString());
                 writer.WriteAttributeString("Position", Position.ToString());
+                if (Storyboard != null)
+                    writer.WriteRaw(Storyboard.ToString());
                 foreach (var current in Images)
                     if (current is Image)
                         writer.WriteRaw(((Image)current).ToString());
@@ -34,7 +36,6 @@ namespace VNCore.Novel.Controls
             var result = new Character();
             using (var reader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(xml))))
                 while (!reader.EOF)
-                {
                     if (reader.IsStartElement("Character"))
                     {
                         int id;
@@ -43,13 +44,14 @@ namespace VNCore.Novel.Controls
                         result.Position = Position.TryParse(reader.GetAttribute("Position"), out position) ? position : new Position();
                         reader.Read();
                     }
+                    else if (reader.IsStartElement("Storyboard"))
+                        result.Storyboard = Storyboard.Parse(reader.ReadOuterXml());
                     else if (reader.IsStartElement("Image"))
                     {
                         if (result.Images == null) result.Images = new List<object>();
                         result.Images.Add(Image.Parse(reader.ReadOuterXml()));
                     }
                     else reader.Read();
-                }
             return result;
         }
 
