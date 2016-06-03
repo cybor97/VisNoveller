@@ -16,7 +16,8 @@ namespace VNCore.Novel
             return RequiredDecisions == null ||
                 RequiredDecisions.Count == 0 ||
                 AlternativeLink == null ||
-                RequiredDecisions.TrueForAll(c => state.Links.Contains(c)) ?//FIXME: potential NullReferenceException
+                state.Links == null ||
+                RequiredDecisions.TrueForAll(c => state.Links.Contains(c)) ?
                 MainLink : AlternativeLink;
         }
         public override string ToString()
