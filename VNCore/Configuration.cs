@@ -30,7 +30,7 @@ namespace VNCore
                 writer.WriteAttributeString("Language", Language ?? (Language = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName));
                 writer.WriteAttributeString("Fullscreen", Fullscreen.ToString());
                 writer.WriteAttributeString("AutoSave", AutoSave.ToString());
-                writer.WriteAttributeString("SoundVolume", AutoSave.ToString());
+                writer.WriteAttributeString("SoundVolume", SoundVolume.ToString());
                 writer.WriteEndElement();
             }
         }
