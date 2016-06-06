@@ -1,1 +1,1 @@
-Created VNCore.Java project directory
+VNCore Java version
