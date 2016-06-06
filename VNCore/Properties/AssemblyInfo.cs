@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("VNCore")]
 [assembly: AssemblyDescription("VisNoveller core.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("KAD_TECH")]
+[assembly: AssemblyCompany("FeoTech team")]
 [assembly: AssemblyProduct("VNCore")]
-[assembly: AssemblyCopyright("Copyright ©KAD_TECH  2016")]
+[assembly: AssemblyCopyright("Copyright ©FeoTech team  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

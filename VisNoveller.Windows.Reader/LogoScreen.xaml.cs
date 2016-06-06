@@ -16,7 +16,7 @@ namespace VisNoveller.Windows.Reader
         {
             InitializeComponent();
             Magic = new Random();
-            Loaded += (s, EA) => CoolTextEffect("KAD_TECHi");
+            Loaded += (s, EA) => CoolTextEffect("FeoTech team");
         }
         void CoolTextEffect(string baseString)
         {

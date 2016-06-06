@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("VisNoveller.Windows.Reader")]
 [assembly: AssemblyDescription("App to play visual novels")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("KAD_TECH")]
+[assembly: AssemblyCompany("FeoTech team")]
 [assembly: AssemblyProduct("VisNoveller.Windows.Reader")]
-[assembly: AssemblyCopyright("Copyright ©KAD_TECH  2016")]
+[assembly: AssemblyCopyright("Copyright ©FeoTech team  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

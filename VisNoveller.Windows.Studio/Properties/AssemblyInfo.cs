@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("VisNoveller.Windows.Studio")]
 [assembly: AssemblyDescription("VisNoveller studio. App for visual novels creation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("KAD_TECH")]
+[assembly: AssemblyCompany("FeoTech team")]
 [assembly: AssemblyProduct("VisNoveller.Windows.Studio")]
-[assembly: AssemblyCopyright("Copyright ©KAD_TECH  2016")]
+[assembly: AssemblyCopyright("Copyright ©FeoTech team  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
