@@ -109,9 +109,8 @@ namespace VNCore.Novel
                         }
                         else return NovelValidatingResult.IncorrectFormat;
                     }
-                    catch (XmlException e)
+                    catch (XmlException)
                     {
-                        Console.WriteLine(e);
                         return NovelValidatingResult.IncorrectFormat;
                     }
                 else return NovelValidatingResult.Empty;
