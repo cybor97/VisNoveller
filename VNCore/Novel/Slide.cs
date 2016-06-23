@@ -24,6 +24,20 @@ namespace VNCore.Novel
             Labels = new List<ILabel>();
             Characters = new List<ICharacter>();
         }
+        public IList<string> GetResources()
+        {
+            var result = new List<string>();
+            if (Background != null &&
+                Background is Image &&
+                ((Image)Background).Mode == ImageStoreMode.Path &&
+                !string.IsNullOrWhiteSpace(((Image)Background).Path))
+                result.Add(((Image)Background).Path);
+            if (BackgroundSound != null && BackgroundSound is string && !string.IsNullOrWhiteSpace((string)BackgroundSound))
+                result.Add((string)BackgroundSound);
+            foreach (var current in Characters)
+                result.AddRange(current.GetResources());
+            return result;
+        }
         public override string ToString()
         {
             var stream = new MemoryStream();
