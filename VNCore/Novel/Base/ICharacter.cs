@@ -4,7 +4,8 @@ namespace VNCore.Novel.Base
 {
     public interface ICharacter
     {
-        List<object> Images { get; set; }
+        List<Image> Images { get; set; }
         Position Position { get; set; }
+        IList<string> GetResources();
     }
 }
