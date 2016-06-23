@@ -11,24 +11,38 @@ namespace VNCore.Extensions
         public static void Pack(string novelFilename, string packedNovelFilename)
         {
             if (File.Exists(novelFilename))
-            {
-                if (Novel.Novel.Validate(novelFilename) == NovelValidatingResult.OK)
+                switch (Novel.Novel.Validate(novelFilename))
                 {
-                    var novel = Novel.Novel.ParseFile(novelFilename);
-                    var workingDirectory = Directory.GetParent(novelFilename).FullName;
-                    var storage = ZipStorer.Create(packedNovelFilename, string.Format("{0} installer", novel.Title));
-                    var resources = novel.GetResources();
-                    storage.AddFile(ZipStorer.Compression.Deflate, novelFilename, Path.GetFileName(novelFilename), novel.Title);
-                    for (int i = 0; i < resources.Count; i++)
-                    {
-                        storage.AddFile(ZipStorer.Compression.Deflate, Path.Combine(workingDirectory, resources[i]), resources[i], "");
-                        CurrentState = (int)(((double)i / resources.Count) * 100);
-                    }
-                    storage.Close();
-                    PackCompleted?.Invoke("OK");
+                    case NovelValidatingResult.OK:
+                        var novel = Novel.Novel.ParseFile(novelFilename);
+                        var workingDirectory = Directory.GetParent(novelFilename).FullName;
+                        var storage = ZipStorer.Create(packedNovelFilename, string.Format("{0} installer", novel.Title));
+                        var resources = novel.GetResources();
+                        storage.AddFile(ZipStorer.Compression.Deflate, novelFilename, Path.GetFileName(novelFilename), novel.Title);
+                        for (int i = 0; i < resources.Count; i++)
+                        {
+                            storage.AddFile(ZipStorer.Compression.Deflate, Path.Combine(workingDirectory, resources[i]), resources[i], "");
+                            CurrentState = (int)(((double)i / resources.Count) * 100);
+                        }
+                        storage.Close();
+                        PackCompleted?.Invoke("OK");
+                        break;
+                    case NovelValidatingResult.Empty:
+                        PackCompleted?.Invoke("FAIL|FILE_IS_EMPTY");
+                        break;
+                    case NovelValidatingResult.IncorrectFormat:
+                        PackCompleted?.Invoke("FAIL|INCORRECT_FORMAT");
+                        break;
+                    case NovelValidatingResult.InnerNavigationProblems:
+                        PackCompleted?.Invoke("FAIL|INNER_NAVIGATION_PROBLEMS");
+                        break;
+                    case NovelValidatingResult.NovelFileNotExists:
+                        PackCompleted?.Invoke("FAIL|FILE_NOT_FOUND");
+                        break;
+                    case NovelValidatingResult.ResourceFileNotExists:
+                        PackCompleted?.Invoke("FAIL|RESOURCE_FILE_NOT_FOUND");
+                        break;
                 }
-                else PackCompleted?.Invoke("FAIL|INCORRECT_FORMAT");
-            }
             else PackCompleted?.Invoke("FAIL|FILE_NOT_FOUND");
         }
         public static void UnPack(string packedNovelFilename, string unpackDirectory)
