@@ -22,7 +22,7 @@ namespace VNCore
             novel.Add(new Slide
             {
                 Title = "First slide",
-                Background=new Image { },
+                Background=new Image { Mode = ImageStoreMode.Path, Path= "TestNovelResources/Images/1.png"},
                 Labels = new[] { new TextLabel { Title = "Unknown voice", Text = "TestNovel. The beginning." } },
                 Characters = new[] { new Character { ID = 0, Position = new Position { X = 20, Y = 1, Height = 20, Width = 20 } } }
             });

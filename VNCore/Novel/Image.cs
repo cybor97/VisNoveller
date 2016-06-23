@@ -39,9 +39,10 @@ namespace VNCore.Novel.Base
                 {
                     if (reader.IsStartElement("Image"))
                     {
-                        int id, mode;
+                        int id;
+                        ImageStoreMode mode;
                         result.ID = int.TryParse(reader.GetAttribute("ID"), out id) ? id : 0;
-                        result.Mode = (ImageStoreMode)(int.TryParse(reader.GetAttribute("Mode"), out mode) ? mode : 0);
+                        result.Mode = Enum.TryParse<ImageStoreMode>(reader.GetAttribute("Mode"), out mode) ? mode : 0;
                         result.Path = reader.GetAttribute("Path");
                         result.Data = Convert.FromBase64String(reader.ReadElementContentAsString());
                     }

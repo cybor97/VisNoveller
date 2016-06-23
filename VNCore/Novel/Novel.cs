@@ -90,7 +90,7 @@ namespace VNCore.Novel
                         {
                             bool allFilesExists = true;
                             foreach (var current in novel.GetResources())
-                                allFilesExists = allFilesExists && File.Exists(Path.Combine(Environment.CurrentDirectory, current));
+                                allFilesExists = allFilesExists && File.Exists(Path.Combine(Directory.GetParent(novelFilename).FullName, current));
                             if (allFilesExists)
                             {
                                 bool innerNavigationOK = true;
@@ -109,8 +109,9 @@ namespace VNCore.Novel
                         }
                         else return NovelValidatingResult.IncorrectFormat;
                     }
-                    catch (XmlException)
+                    catch (XmlException e)
                     {
+                        Console.WriteLine(e);
                         return NovelValidatingResult.IncorrectFormat;
                     }
                 else return NovelValidatingResult.Empty;
