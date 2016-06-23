@@ -2,6 +2,7 @@
 using System.IO;
 using VNCore.Extensions;
 using VNCore.Novel;
+using VNCore.Novel.Base;
 using VNCore.Novel.Controls;
 
 namespace VNCore
@@ -21,8 +22,9 @@ namespace VNCore
             novel.Add(new Slide
             {
                 Title = "First slide",
+                Background=new Image { },
                 Labels = new[] { new TextLabel { Title = "Unknown voice", Text = "TestNovel. The beginning." } },
-                Characters = new[] { new Character { ID = 0, Position = new Position { X = 20, Y = 1, Height = 20, Width = 20 } } },
+                Characters = new[] { new Character { ID = 0, Position = new Position { X = 20, Y = 1, Height = 20, Width = 20 } } }
             });
             var directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             var filename = Path.Combine(directory, string.Format("TestNovel.{0}", EnvironmentVariables.NovelExtension));
