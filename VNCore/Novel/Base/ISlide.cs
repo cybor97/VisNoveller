@@ -8,5 +8,6 @@ namespace VNCore.Novel.Base
         string Title { get; set; }
         object Background { get; set; }
         IList<ILabel> Labels { get; set; }
+        IList<string> GetResources();
     }
 }
