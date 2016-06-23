@@ -16,9 +16,10 @@ namespace VNCore.Novel.Controls
         public IList<string> GetResources()
         {
             var result = new List<string>();
-            foreach (var current in Images)
-                if (current.Mode == ImageStoreMode.Path)
-                    result.Add(current.Path);
+            if (Images != null)
+                foreach (var current in Images)
+                    if (current != null && current.Mode == ImageStoreMode.Path && !string.IsNullOrWhiteSpace(current.Path))
+                        result.Add(current.Path);
             return result;
         }
         public override string ToString()
