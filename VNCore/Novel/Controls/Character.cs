@@ -10,9 +10,17 @@ namespace VNCore.Novel.Controls
     public class Character : ICharacter
     {
         public int ID { get; set; }
-        public List<object> Images { get; set; }
+        public List<Image> Images { get; set; }
         public Position Position { get; set; }
         public Storyboard Storyboard { get; set; }
+        public IList<string> GetResources()
+        {
+            var result = new List<string>();
+            foreach (var current in Images)
+                if (current.Mode == ImageStoreMode.Path)
+                    result.Add(current.Path);
+            return result;
+        }
         public override string ToString()
         {
             var stream = new MemoryStream();
@@ -49,7 +57,7 @@ namespace VNCore.Novel.Controls
                         result.Storyboard = Storyboard.Parse(reader.ReadOuterXml());
                     else if (reader.IsStartElement("Image"))
                     {
-                        if (result.Images == null) result.Images = new List<object>();
+                        if (result.Images == null) result.Images = new List<Image>();
                         result.Images.Add(Image.Parse(reader.ReadOuterXml()));
                     }
                     else reader.Read();
