@@ -161,13 +161,11 @@ namespace VNCore.Novel
         public List<string> GetResources()
         {
             var result = new List<string>();
+            if (Icon != null && Icon.Mode == ImageStoreMode.Path && !string.IsNullOrWhiteSpace(Icon.Path)) result.Add(Icon.Path);
+            if (Logo != null && Logo.Mode == ImageStoreMode.Fact && !string.IsNullOrWhiteSpace(Logo.Path)) result.Add(Logo.Path);
             foreach (var currentISlide in this)
-            {
-                if (currentISlide.Background != null)
-                    result.Add((string)currentISlide.Background);
-                if (currentISlide is Slide && ((Slide)currentISlide).BackgroundSound != null)
-                    result.Add((string)((Slide)currentISlide).BackgroundSound);
-            }
+                if (currentISlide != null)
+                    result.AddRange(currentISlide.GetResources());
             return result;
         }
     }
