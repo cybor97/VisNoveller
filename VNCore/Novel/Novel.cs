@@ -27,24 +27,24 @@ namespace VNCore.Novel
     }
     public class Novel : List<ISlide>
     {
-        public int Version { get; set; }
+        public uint Version { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string KonamiCode { get; set; }
         public Image Icon { get; set; }
         public Image Logo { get; set; }
-        public List<string> Tags { get; set; }
+        public IList<string> Tags { get; set; }
         public Novel()
         {
             Tags = new List<string>();
         }
         public void WriteFile(string filename)
         {
-            File.WriteAllBytes(filename, WriteStream().GetBuffer());
+            File.WriteAllText(filename, WriteString());
         }
         public string WriteString()
         {
-            return Encoding.UTF8.GetString(WriteStream().GetBuffer());
+            return Encoding.UTF8.GetString(WriteStream().GetBuffer()).Trim((char)0);
         }
         public MemoryStream WriteStream()
         {
@@ -118,24 +118,24 @@ namespace VNCore.Novel
         }
         public static Novel ParseFile(string filename)
         {
-            return Parse(new FileStream(filename, FileMode.Open));
+            return ParseText(File.ReadAllText(filename));
         }
         public static Novel ParseText(string xml)
         {
-            return Parse(new MemoryStream(Encoding.UTF8.GetBytes(xml)));
+            return Parse(new MemoryStream(Encoding.UTF8.GetBytes(xml.Trim((char)0))));
         }
         public static Novel Parse(Stream stream)
         {
             var result = new Novel();
-            using (var reader = XmlReader.Create(stream))
+            using (var reader = XmlReader.Create(stream, new XmlReaderSettings { CheckCharacters = false }))
                 while (!reader.EOF)
                 {
                     if (reader.IsStartElement("Novel"))
                     {
                         result.Title = reader.GetAttribute("Title");
                         result.KonamiCode = reader.GetAttribute("KonamiCode");
-                        int version;
-                        result.Version = int.TryParse(reader.GetAttribute("Version"), out version) ? version : 0;
+                        uint version;
+                        result.Version = uint.TryParse(reader.GetAttribute("Version"), out version) ? version : 0;
                         reader.Read();
                     }
                     else if (reader.IsStartElement("Description"))
@@ -163,8 +163,9 @@ namespace VNCore.Novel
             var result = new List<string>();
             foreach (var currentISlide in this)
             {
-                result.Add((string)currentISlide.Background);
-                if (currentISlide is Slide)
+                if (currentISlide.Background != null)
+                    result.Add((string)currentISlide.Background);
+                if (currentISlide is Slide && ((Slide)currentISlide).BackgroundSound != null)
                     result.Add((string)((Slide)currentISlide).BackgroundSound);
             }
             return result;

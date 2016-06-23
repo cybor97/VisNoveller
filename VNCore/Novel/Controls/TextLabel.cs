@@ -17,7 +17,7 @@ namespace VNCore.Novel.Controls
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 writer.WriteStartElement("Label");
                 writer.WriteAttributeString("Type", "TextLabel");
@@ -31,7 +31,7 @@ namespace VNCore.Novel.Controls
                 writer.WriteString(Text);
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static TextLabel Parse(string xml)
         {

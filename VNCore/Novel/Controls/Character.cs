@@ -16,7 +16,7 @@ namespace VNCore.Novel.Controls
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 writer.WriteStartElement("Character");
                 writer.WriteAttributeString("Type", "Character");
@@ -24,12 +24,13 @@ namespace VNCore.Novel.Controls
                 writer.WriteAttributeString("Position", Position.ToString());
                 if (Storyboard != null)
                     writer.WriteRaw(Storyboard.ToString());
-                foreach (var current in Images)
-                    if (current is Image)
-                        writer.WriteRaw(((Image)current).ToString());
+                if (Images != null)
+                    foreach (var current in Images)
+                        if (current is Image)
+                            writer.WriteRaw(((Image)current).ToString());
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static Character Parse(string xml)
         {

@@ -18,7 +18,7 @@ namespace VNCore.Game
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 writer.WriteStartElement("Game");
                 writer.WriteAttributeString("Name", Name);

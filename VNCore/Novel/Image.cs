@@ -19,7 +19,7 @@ namespace VNCore.Novel.Base
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 writer.WriteStartElement("Image");
                 writer.WriteAttributeString("ID", ID.ToString());
@@ -29,7 +29,7 @@ namespace VNCore.Novel.Base
                     writer.WriteString(Convert.ToBase64String(Data));
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static Image Parse(string xml)
         {

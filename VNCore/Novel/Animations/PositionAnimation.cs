@@ -33,7 +33,7 @@ namespace VNCore.Novel.Animations
                 writer.WriteAttributeString("RepeatForever", RepeatForever.ToString());
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static PositionAnimation Parse(string xml)
         {

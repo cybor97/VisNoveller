@@ -7,6 +7,6 @@ namespace VNCore.Novel.Base
         int ID { get; set; }
         string Title { get; set; }
         object Background { get; set; }
-        List<ILabel> Labels { get; set; }
+        IList<ILabel> Labels { get; set; }
     }
 }

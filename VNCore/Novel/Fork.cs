@@ -45,7 +45,7 @@ namespace VNCore.Novel
                 }
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static Fork Parse(string xml)
         {

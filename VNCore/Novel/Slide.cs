@@ -17,8 +17,8 @@ namespace VNCore.Novel
         public string Title { get; set; }
         public object Background { get; set; }
         public object BackgroundSound { get; set; }
-        public List<ILabel> Labels { get; set; }
-        public List<ICharacter> Characters { get; set; }
+        public IList<ILabel> Labels { get; set; }
+        public IList<ICharacter> Characters { get; set; }
         public Slide()
         {
             Labels = new List<ILabel>();
@@ -27,7 +27,7 @@ namespace VNCore.Novel
         public override string ToString()
         {
             var stream = new MemoryStream();
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 writer.WriteStartElement("Slide");
                 writer.WriteAttributeString("Type", "Slide");
@@ -78,7 +78,7 @@ namespace VNCore.Novel
                     writer.WriteRaw(current.ToString());
                 writer.WriteEndElement();
             }
-            return Encoding.UTF8.GetString(stream.GetBuffer());
+            return Encoding.UTF8.GetString(stream.GetBuffer()).Trim((char)0);
         }
         public static Slide Parse(string xml)
         {
