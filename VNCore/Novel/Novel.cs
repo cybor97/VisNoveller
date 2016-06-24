@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace VNCore.Novel
 {
-    public enum NovelValidatingResult
+    public enum NovelValidatingResult : byte
     {
         OK,
         Empty,
@@ -17,7 +17,7 @@ namespace VNCore.Novel
         ResourceFileNotExists,
         InnerNavigationProblems
     }
-    public enum ReservedIDs
+    public enum ReservedIDs : sbyte
     {
         StartSlide = -1,
         MenuSlide = -2,
