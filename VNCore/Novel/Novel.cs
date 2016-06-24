@@ -65,7 +65,7 @@ namespace VNCore.Novel
                 if (Logo != null)
                 {
                     writer.WriteStartElement("Logo");
-                    writer.WriteRaw(Icon.ToString());
+                    writer.WriteRaw(Logo.ToString());
                     writer.WriteEndElement();
                 }
                 var tags = "";
@@ -162,7 +162,7 @@ namespace VNCore.Novel
         {
             var result = new List<string>();
             if (Icon != null && Icon.Mode == ImageStoreMode.Path && !string.IsNullOrWhiteSpace(Icon.Path)) result.Add(Icon.Path);
-            if (Logo != null && Logo.Mode == ImageStoreMode.Fact && !string.IsNullOrWhiteSpace(Logo.Path)) result.Add(Logo.Path);
+            if (Logo != null && Logo.Mode == ImageStoreMode.Path && !string.IsNullOrWhiteSpace(Logo.Path)) result.Add(Logo.Path);
             foreach (var currentISlide in this)
                 if (currentISlide != null)
                     result.AddRange(currentISlide.GetResources());

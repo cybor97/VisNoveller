@@ -48,23 +48,28 @@ namespace VNCore.Extensions
         public static void UnPack(string packedNovelFilename, string unpackDirectory)
         {
             if (!Directory.Exists(unpackDirectory)) Directory.CreateDirectory(unpackDirectory);
-            if (ZipStorer.Validate(packedNovelFilename, FileAccess.Read) == ZipValidatingResult.OK)
+            switch (ZipStorer.Validate(packedNovelFilename, FileAccess.Read))
             {
-                var zip = ZipStorer.Open(packedNovelFilename, FileAccess.Read);
-                var files = zip.ReadCentralDir();
-                for (int i = 0; i < files.Count; i++)
-                {
-                    var dir = ZipStorer.GetRelativeParent(files[i].FilenameInZip);
-                    if (!Directory.Exists(Path.Combine(unpackDirectory, dir)))
+                case ZipValidatingResult.OK:
+                    var zip = ZipStorer.Open(packedNovelFilename, FileAccess.Read);
+                    var files = zip.ReadCentralDir();
+                    for (int i = 0; i < files.Count; i++)
                     {
-                        Directory.CreateDirectory(Path.Combine(unpackDirectory, dir));
-                        CurrentState = (int)(((double)i / files.Count) * 100);
+                            CurrentState = (int)(((double)i / files.Count) * 100);
+                        zip.ExtractFile(files[i], Path.Combine(unpackDirectory,  files[i].FilenameInZip));
                     }
-                    zip.ExtractFile(files[i], Path.Combine(dir, files[i].FilenameInZip));
                     PackCompleted?.Invoke("OK");
-                }
+                    break;
+                case ZipValidatingResult.FileNotExist:
+                    PackCompleted?.Invoke("FAIL|FILE_NOT_FOUND");
+                    break;
+                case ZipValidatingResult.ZipNull:
+                    PackCompleted?.Invoke("FAIL|ZIP_NULL");
+                    break;
+                case ZipValidatingResult.UnknownIOError:
+                    PackCompleted?.Invoke("FAIL|UNKNOWN_IO_ERROR");
+                    break;
             }
-            else PackCompleted?.Invoke("FAIL|INCORRECT_FORMAT");
         }
     }
 }
