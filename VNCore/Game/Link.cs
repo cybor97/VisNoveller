@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -36,9 +37,10 @@ namespace VNCore.Game
                 while (reader.Read())
                     if (reader.IsStartElement("Link"))
                     {
+                        LinkMode mode;
                         result.DestinationID = int.Parse(reader.GetAttribute("DestinationID"));
                         result.LinkID = int.Parse(reader.GetAttribute("LinkID"));
-                        result.Mode = (LinkMode)int.Parse(reader.GetAttribute("Mode"));
+                        result.Mode = Enum.TryParse(reader.GetAttribute("Mode"), out mode) ? mode : LinkMode.None;
                     }
             return result;
         }
