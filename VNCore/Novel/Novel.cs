@@ -5,6 +5,7 @@ using System.IO;
 using VNCore.Novel.Base;
 using System;
 using System.Linq;
+using VNCore.Extensions;
 
 namespace VNCore.Novel
 {
@@ -40,7 +41,7 @@ namespace VNCore.Novel
         }
         public void WriteFile(string filename)
         {
-            File.WriteAllText(filename, WriteString());
+            File.WriteAllText(filename, WriteString().FormatXmlString());
         }
         public string WriteString()
         {

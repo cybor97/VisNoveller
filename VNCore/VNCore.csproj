@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="EnvironmentVariables.cs" />
+    <Compile Include="Extensions\XmlStringProcessor.cs" />
     <Compile Include="MonoIntegrated\Color.cs" />
     <Compile Include="MonoIntegrated\ColorTranslator.cs" />
     <Compile Include="MonoIntegrated\KnownColor.cs" />
